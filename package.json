@@ -1,0 +1,35 @@
+{
+  "name": "chatbot",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host --mode dev",
+    "dev:prod": "vite --host --mode prod",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy_test": "vite build && node ./deploy test",
+    "deploy_prod": "vite build && node ./deploy prod"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^1.1.4",
+    "@kangc/v-md-editor": "^2.3.18",
+    "@vueuse/core": "^10.9.0",
+    "axios": "^0.27.2",
+    "element-plus": "^2.3.3",
+    "highlight.js": "^11.9.0",
+    "pinia": "^2.0.34",
+    "postcss-pxtorem": "^6.0.0",
+    "sass": "^1.51.0",
+    "vue": "^3.3.11",
+    "vue-router": "^4.0.14"
+  },
+  "devDependencies": {
+    "@vicons/ionicons5": "^0.12.0",
+    "@vicons/material": "^0.12.0",
+    "@vitejs/plugin-vue": "^4.5.2",
+    "naive-ui": "^2.38.1",
+    "vite": "^5.0.8",
+    "vite-plugin-jump-code": "^1.2.0"
+  }
+}

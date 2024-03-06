@@ -1,0 +1,73 @@
+// ----------------------------------浅色样式
+// 主题色
+$light-color-primary: #246de5; // 主色调
+$light-color-primary-1: #dfe9fc; // tag 背景色
+$light-color-primary-2: #eff4fd; // 目录选择背景色
+$light-color-primary-3: #e5ebff; // 消息背景
+$light-color-primary-4: #f4f7ff; // 消息背景
+
+// 灰色
+$light-color-grey: #6f6f6f; // 灰色底部
+$light-color-grey-1: #c2c1c1;
+$light-color-grey-2: #eeeeee;
+$light-color-grey-3: #f6f6f6;
+
+// 白色
+$light-color-white: #ffffff;
+
+// 黑色
+$light-color-black: #000000;
+$light-color-black-1: #333333;
+
+$font-size-lv1: 18px;
+$font-size-lv2: 16px;
+$font-size-lv3: 14px;
+$font-size-lv4: 12px;
+// ------------------------------------深色样式
+
+// 布局代码块
+@mixin flex-center() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column() {
+  display: flex;
+  flex-direction: column;
+}
+@mixin flex-column-center() {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+@mixin flex-space-between-center() {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-layout(
+  $flex-direction: row,
+  $justify-content: center,
+  $align-items: center
+) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
+@mixin list-wrap() {
+  padding: 10px;
+  background-color: #f4f6f9;
+  height: calc(100vh - 60px);
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+//----------------------样式覆盖
+.popover-hide {
+  display: none;
+}
