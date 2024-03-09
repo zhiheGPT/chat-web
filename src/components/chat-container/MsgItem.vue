@@ -42,7 +42,7 @@ const status = computed(() => props.item.status)
 <style lang="scss" scoped>
 .left_content {
   position: relative;
-  max-width: 1200px;
+  overflow: auto;
   .loading {
     position: absolute !important;
     width: 20px;
@@ -85,6 +85,8 @@ const status = computed(() => props.item.status)
       padding: 16px 20px;
       border-radius: 4px;
       color: #333333;
+      // max-width: 80%;
+      word-break: break-all;
     }
     &.msg-item__left {
       align-self: flex-start;

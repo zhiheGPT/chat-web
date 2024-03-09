@@ -1,9 +1,5 @@
 @import './var.scss';
-
-:root {
-  // --el-color-primary: #111111;
-  // --el-button-hover-bg-color: #333333;
-}
+@import './dark.scss';
 
 * {
   font-family: PingFang SC, Microsoft YaHei;
@@ -11,11 +7,15 @@
 * {
   margin: 0;
 }
+html,
+body,
+#app {
+  height: 100%;
+}
 body {
   margin: 0;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
 }
 ul {
   list-style: none;
@@ -67,6 +67,9 @@ h1 {
   -webkit-line-clamp: 1;
   display: -webkit-box;
 }
+.overflow-hidden {
+  overflow: hidden;
+}
 svg {
   outline: none;
 }
@@ -74,22 +77,13 @@ svg {
   outline: none;
 }
 
-// .el-overlay {
-//   height: 100vh !important;
-// }
-.el-drawer {
-  // height: 100vh !important;
-  .el-drawer__header {
-    margin: 0;
-    padding: 10px 0;
-  }
-  .el-drawer__body {
-    padding: 0;
-  }
+.github-markdown-body {
+  z-index: 0;
+  position: relative;
 }
 
 // 自动生成 padding margin
-$pixel: 0, 4, 5, 10, 12, 15, 18, 20, 25, 30, 40, 50, 70;
+$pixel: 0, 4, 5, 10, 12, 15, 18, 20, 25, 30, 40, 50, 70, 240;
 $position: top, right, bottom, left;
 $position-class: 't', 'r', 'b', 'l';
 @each $item in $pixel {

@@ -7,7 +7,6 @@ export function useTheme() {
   const OsTheme = useOsTheme()
 
   const isDark = computed(() => {
-    debugger
     if (appStore.theme === 'auto')
       return OsTheme.value === 'dark'
     else

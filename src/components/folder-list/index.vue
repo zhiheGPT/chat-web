@@ -14,15 +14,23 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { watch } from 'vue'
 import Item from './item.vue'
 import { useFile } from '@/hooks/useFile'
+import { useAppStore } from '@/stores'
 
+const appStore = useAppStore()
 
 const { folders, loading, initFolder, deleteFile } = useFile()
-onMounted(async () => {
-  initFolder()
-})
+
+watch(
+  () => appStore.key,
+  (val) => {
+    val && initFolder()
+  },
+  { immediate: true }
+)
+
 const removeFolder = () => {}
 const removeFile = ({ id }) => {
   deleteFile(id)

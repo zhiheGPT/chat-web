@@ -7,7 +7,6 @@ export const useChatStore = defineStore({
   id: 'chat',
   state: () => {
     return {
-      showWapMenu: true,
       loading: false,
       chatId: '', // 当前 chatId
       chatList: [], // 当前文件
@@ -128,9 +127,6 @@ export const useChatStore = defineStore({
           avatar: data.headImg || 'https://lf3-static.bytednsdoc.com/obj/eden-cn/zu-qz/ljhwZthlaukjlkulzlp/CNS-新封面图片/PPT生成.jpg',
         }
       }
-    },
-    switchMenu() {
-      this.collapsed = !this.collapsed
     }
   },
 })

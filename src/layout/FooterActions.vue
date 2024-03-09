@@ -18,12 +18,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { LightModeRound, SettingsRound, DarkModeRound } from '@vicons/material'
-import { NIcon, useMessage } from 'naive-ui'
+import { NIcon } from 'naive-ui'
 import SystemPopup from '@/components/system-popup/index.vue'
 import { useAppStore } from '@/stores'
 
 const appStore = useAppStore()
-const message = useMessage()
 const systemPopupRef = ref()
 const openSetting = () => {
   systemPopupRef.value.show()
@@ -31,12 +30,11 @@ const openSetting = () => {
 
 onMounted(() => {
   if (!appStore.key) {
-    message.warning('先配置key再使用哦~')
+    $message.warning('先配置key再使用哦~')
     openSetting()
   }
 })
 const switchTheme = () => {
-  debugger
   if (appStore.theme == 'light') appStore.theme = 'dark'
   else appStore.theme = 'light'
 }

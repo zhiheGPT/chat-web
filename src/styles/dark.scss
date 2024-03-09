@@ -1,0 +1,17 @@
+.dark {
+  .v-md-editor-preview {
+    &.md_content {
+      background-color: #1a1a1a;
+    }
+    .github-markdown-body {
+      background-color: #1a1a1a;
+    }
+    .v-md-pre-wrapper {
+      background-color: #292929;
+    }
+  }
+  .msg-item__box .content {
+    color: rgba(255, 255, 255, 0.82) !important;
+    background-color: #1a1a1a !important;
+  }
+}

@@ -12,7 +12,6 @@ import ChatContainer from '@/components/chat-container/index.vue'
   height: 100%;
   max-width: 100vw;
   box-sizing: border-box;
-  // background-color: #f8f8f8;
   padding: 0 10px;
   overflow: auto;
 }

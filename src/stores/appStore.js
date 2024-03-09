@@ -22,7 +22,12 @@ export const useAppStore = defineStore({
       return state.apiKey || import.meta.env.VITE_API_KEY
     },
     modelList(state) {
-      return state.models.concat(state.customModels)
+      return state.models.concat(state.customModels).filter(t => t).map(val => {
+        return {
+          label: val,
+          key: val,
+        }
+      })
     }
   },
   actions: {
@@ -39,7 +44,6 @@ export const useAppStore = defineStore({
       localStorage.setItem('chatbot-custom-models', JSON.stringify(this.customModels))
     },
     setSiderCollapsed(t) {
-      debugger
       this.collapsed = t
     }
   }

@@ -8,53 +8,31 @@ const appStore = useAppStore()
 
 const { isMobile } = useBasicLayout()
 
-const getMobileClass = computed(() => {
-  if (isMobile.value) {
-    return {
-      position: 'fixed',
-      zIndex: 50
-    }
-  }
-  return {}
+const getContainerClass = computed(() => {
+  return ['h-full', { pl240: !isMobile.value && !appStore.collapsed }]
 })
-
 onMounted(() => {})
 </script>
 <template>
-  <div class="layout">
-    <NLayout has-sider>
+  <div class="h-full overflow-hidden">
+    <NLayout :class="getContainerClass" has-sider>
       <NLayoutSider
         :collapsed="appStore.collapsed"
         :collapsed-width="0"
         :width="240"
         :show-trigger="isMobile ? false : 'arrow-circle'"
         collapse-mode="transform"
+        position="absolute"
         bordered
         @update-collapsed="appStore.setSiderCollapsed"
       >
         <SideBar></SideBar>
       </NLayoutSider>
-      <NLayoutContent style="flex: 1">
+      <NLayoutContent class="h-full">
         <router-view></router-view>
       </NLayoutContent>
     </NLayout>
   </div>
 </template>
 
-<style lang="scss">
-.layout {
-  display: flex;
-  height: 100vh;
-  width: 100%;
-  .nav {
-    display: block;
-    width: 256px;
-    overflow: hidden;
-    background: #ffffff;
-    border-right: 1px solid #dddddd;
-  }
-  .main {
-    width: 100%;
-  }
-}
-</style>
+<style lang="scss"></style>

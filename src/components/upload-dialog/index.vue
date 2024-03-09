@@ -38,7 +38,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { ElMessage } from 'element-plus'
+
 import { uploadFile } from '@/api'
 import { useChatStore } from '@/stores'
 
@@ -58,12 +58,12 @@ const beforeUpload = (rawFile) => {
     // 文件大小相关校验 20M
     const maxSize = 20 * 1000 * 1024
     if (rawFile.size >= maxSize) {
-      ElMessage.warning('文件大小最多20M')
+      $message.warning('文件大小最多20M')
       return false
     }
     return true
   } else {
-    ElMessage.warning('文件格式不支持')
+    $message.warning('文件格式不支持')
     return false
   }
 }

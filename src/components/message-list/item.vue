@@ -89,4 +89,17 @@ const getDatetime = (datetime) => {}
     align-self: flex-end;
   }
 }
+.dark {
+  .chat-item {
+    color: #ffffff;
+    background-color: #303033;
+    &:hover,
+    &.is-active {
+      background-color: #454548;
+    }
+    .left{
+      background-color: #101014;
+    }
+  }
+}
 </style>

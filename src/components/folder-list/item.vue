@@ -78,9 +78,6 @@ const selectFile = async (file) => {
 <style lang="scss" scoped>
 .folder-box {
   @include flex-column;
-  &:hover {
-    // background-color: #1a1a1a0d;
-  }
 }
 .folder-item,
 .file-item {
@@ -91,7 +88,9 @@ const selectFile = async (file) => {
   margin-bottom: 10px;
   height: 40px;
   border-radius: 5px;
-
+  &.is-active {
+    background-color: #1a1a1a0d;
+  }
   .title {
     cursor: pointer;
     white-space: nowrap;
@@ -117,20 +116,9 @@ const selectFile = async (file) => {
     }
   }
   :deep(.el-icon) {
-    &:hover,
-    &:focus {
-      background-color: $light-color-grey-2;
-    }
     padding: 2px;
     border-radius: 2px;
     cursor: pointer;
-  }
-  &.is-active {
-    background-color: #1a1a1a0d;
-    :deep(.el-icon):hover,
-    :deep(.el-icon):focus {
-      background-color: #dfe9fc;
-    }
   }
 }
 .folder-item {
@@ -142,9 +130,21 @@ const selectFile = async (file) => {
 }
 .file-item {
   padding-left: 25px;
-
   .title {
     font-size: 14px;
+  }
+}
+.dark {
+  .file-item {
+    color: #ffffff;
+    background-color: #303033;
+    &:hover,
+    &.is-active {
+      background-color: #454548;
+    }
+    .left {
+      // background-color: #101014;
+    }
   }
 }
 </style>

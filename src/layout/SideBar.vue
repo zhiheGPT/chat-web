@@ -3,7 +3,7 @@
     <div class="top">
       <span class="title">ChatFire</span>
       <div class="actions">
-        <template v-if="chatStore.tabIndex == 2">
+        <template v-if="chatStore.tabIndex == 1">
           <el-icon class="cursor-p" :size="20" @click="chatStore.createChat"
             ><ChatLineSquare
           /></el-icon>
@@ -23,20 +23,23 @@
         default-value="1"
         animated
       >
-        <n-tab-pane name="1" tab="问答助手"> </n-tab-pane>
-        <n-tab-pane name="2" tab="文件管理"> </n-tab-pane>
+        <n-tab-pane name="1" tab="问答助手"></n-tab-pane>
+        <n-tab-pane name="2" tab="文件管理"></n-tab-pane>
       </n-tabs>
     </div>
-    <div class="list">
-      <MessageList
-        v-show="chatStore.tabIndex == 1"
-        :list="chatStore.chatList"
-      ></MessageList>
-      <FolderList v-show="chatStore.tabIndex == 2"></FolderList>
+    <div class="h-full overflow-hidden">
+      <NScrollbar>
+        <MessageList
+          v-show="chatStore.tabIndex == 1"
+          :list="chatStore.chatList"
+        ></MessageList>
+        <FolderList v-show="chatStore.tabIndex == 2"></FolderList>
+      </NScrollbar>
     </div>
     <FooterActions></FooterActions>
     <UploadDialog ref="uploadDialogRef"></UploadDialog>
   </aside>
+  <!-- 移动端蒙层 -->
   <template v-if="isMobile">
     <div
       v-show="!appStore.collapsed"
@@ -53,7 +56,7 @@ import MessageList from '@/components/message-list/index.vue'
 import UploadDialog from '@/components/upload-dialog/index.vue'
 import FooterActions from './FooterActions.vue'
 import { useChatStore, useAppStore } from '@/stores'
-import { NTabs, NTabPane } from 'naive-ui'
+import { NTabs, NScrollbar, NTabPane } from 'naive-ui'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 
 const { isMobile } = useBasicLayout()
@@ -108,11 +111,6 @@ aside {
   }
   .search {
     margin-bottom: 10px;
-  }
-
-  .list {
-    flex: 1;
-    overflow: auto;
   }
   .mask {
     position: fixed;

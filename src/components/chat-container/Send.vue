@@ -23,21 +23,11 @@
     </div>
     <div class="tools">
       <!-- 模型切换 -->
-      <el-dropdown placement="top">
+      <NDropdown :options="appStore.modelList" @select="modelSelect">
         <div class="item">
           <el-icon :size="15"><Cpu /></el-icon>
         </div>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item
-              v-for="item in appStore.modelList"
-              :key="item"
-              @click="sendOptions.model = item"
-              >{{ item }}</el-dropdown-item
-            >
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
+      </NDropdown>
 
       <!-- 温度修改 -->
       <div class="item">
@@ -60,17 +50,17 @@
         </el-popover>
       </div>
       <!-- 文件上传 -->
-      <el-upload
+      <NUpload
         v-if="showUpload"
         action=""
         :show-file-list="false"
-        :before-upload="beforeUpload"
-        :http-request="ossUploadFile"
+        :on-before-upload="beforeUpload"
+        :custom-request="ossUploadFile"
       >
         <div class="item">
           <el-icon :size="15"><UploadFilled /></el-icon>
         </div>
-      </el-upload>
+      </NUpload>
     </div>
     <el-input
       type="textarea"
@@ -92,9 +82,9 @@
 import { ref, watch, computed } from 'vue'
 import { useSend } from '@/hooks/useSend'
 import { useChatStore, useAppStore } from '@/stores'
-import { ElMessage } from 'element-plus'
 import { uploadFile } from '@/api'
 import { isPhone } from '@/utils'
+import { NUpload, NDropdown } from 'naive-ui'
 
 const list = ref([])
 const appStore = useAppStore()
@@ -113,6 +103,7 @@ const fileId = computed(() => {
     return chatStore.chat.file?.id || ''
   }
 })
+
 const placeholder = computed(() =>
   isPhone
     ? '传递的你的想法'
@@ -140,8 +131,13 @@ watch(
   { immediate: true, deep: true }
 )
 
+// 模型切换
+const modelSelect = (val) => {
+  sendOptions.value.model = val
+}
+
 // 校验
-const beforeUpload = (rawFile) => {
+const beforeUpload = ({ file }) => {
   // 类型限制 jpg jpeg docx doc pdf
   let types = [
     'image/jpeg',
@@ -151,16 +147,16 @@ const beforeUpload = (rawFile) => {
     'application/pdf'
   ]
   // 校验文件相关信息
-  if (types.includes(rawFile.type)) {
+  if (types.includes(file.type)) {
     // 文件大小相关校验 20M
     const maxSize = 20 * 1000 * 1024
-    if (rawFile.size >= maxSize) {
-      ElMessage.warning('文件大小最多20M')
+    if (file.size >= maxSize) {
+      $message.warning('文件大小最多20M')
       return false
     }
     return true
   } else {
-    ElMessage.warning('文件格式不支持')
+    $message.warning('文件格式不支持')
     return false
   }
 }

@@ -15,10 +15,8 @@
         <div class="title">
           <span>{{ item.title }}</span>
           <div class="tags">
-            <el-tag class="mr5" type="info">{{
-              chatStore.sendOptions.model
-            }}</el-tag>
-            <el-tag type="info">{{ chatStore.sendOptions.temperature }}</el-tag>
+            <NTag class="mr5" size="small">{{ chatStore.sendOptions.model }}</NTag>
+            <NTag size="small">{{ chatStore.sendOptions.temperature }}</NTag>
           </div>
         </div>
         <div class="desc">{{ item.desc }}</div>
@@ -41,6 +39,7 @@ import { ref, computed } from 'vue'
 import ZhIcon from '../zh-icon/index.vue'
 import ChatSettingPopup from './ChatSettingPopup.vue'
 import { useChatStore, useAppStore } from '@/stores'
+import { NTag } from 'naive-ui'
 
 const appStore = useAppStore()
 const chatStore = useChatStore()
