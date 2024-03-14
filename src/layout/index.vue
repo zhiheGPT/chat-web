@@ -1,20 +1,21 @@
 <script setup>
-import { onMounted, computed, ref } from 'vue'
-import { NLayout, NLayoutSider, NLayoutContent } from 'naive-ui'
-import SideBar from './SideBar.vue'
-import { useBasicLayout } from '@/hooks/useBasicLayout'
-import { useAppStore } from '@/stores'
-const appStore = useAppStore()
+import { onMounted, computed, ref } from "vue";
+import { NLayout, NLayoutSider, NLayoutContent, NSpin } from "naive-ui";
+import SideBar from "./SideBar.vue";
+import { useBasicLayout } from "@/hooks/useBasicLayout";
+import { useAppStore, useChatStore } from "@/stores";
+const appStore = useAppStore();
+const chatStore = useChatStore();
 
-const { isMobile } = useBasicLayout()
+const { isMobile } = useBasicLayout();
 
 const getContainerClass = computed(() => {
-  return ['h-full', { pl240: !isMobile.value && !appStore.collapsed }]
-})
-onMounted(() => {})
+  return ["h-full", { pl240: !isMobile.value && !appStore.collapsed }];
+});
+onMounted(() => {});
 </script>
 <template>
-  <div class="h-full overflow-hidden">
+  <NSpin class="h-full overflow-hidden" :show="chatStore.loading">
     <NLayout :class="getContainerClass" has-sider>
       <NLayoutSider
         :collapsed="appStore.collapsed"
@@ -32,7 +33,11 @@ onMounted(() => {})
         <router-view></router-view>
       </NLayoutContent>
     </NLayout>
-  </div>
+  </NSpin>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.n-spin-content {
+  height: 100%;
+}
+</style>

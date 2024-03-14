@@ -1,10 +1,10 @@
 <template>
   <div class="recommend" v-if="chatStore.file.content">
-    <el-collapse>
-      <el-collapse-item title="点击查看大纲" name="1">
+    <NCollapse>
+      <NCollapseItem name="1" title="点击查看大纲">
         <span>{{ chatStore.file.content }}</span>
-      </el-collapse-item>
-    </el-collapse>
+      </NCollapseItem>
+    </NCollapse>
     <!-- <p class="tips">选择以下话题快速与我对话</p>
     <div class="list">
       <div class="item" @click="selectPrompt">
@@ -17,11 +17,13 @@
 </template>
 
 <script setup>
-import { useChatStore } from '@/stores'
+import { useChatStore } from "@/stores"
+import { NCollapse, NCollapseItem } from "naive-ui"
+
 const chatStore = useChatStore()
-const emit = defineEmits(['select-prompt'])
+const emit = defineEmits(["select-prompt"])
 const selectPrompt = () => {
-  emit('select-prompt', '我想拍一个关于美食的视频，受众是年轻人。')
+  emit("select-prompt", "我想拍一个关于美食的视频，受众是年轻人。")
 }
 </script>
 <style lang="scss" scoped>

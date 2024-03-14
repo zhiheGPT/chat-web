@@ -13,36 +13,34 @@
     :negative-button-props="{ ghost: true, color: '#999999' }"
     style="width: 95%; max-width: 640px"
   >
-    <el-form label-width="120px">
-      <el-form-item label="API Key">
-        <el-input v-model="setting.apiKey"></el-input>
-      </el-form-item>
-      <el-form-item label="自定义模型名称">
-        <el-input
-          v-model="setting.models"
+    <NForm label-width="120px" label-placement="left">
+      <n-form-item label="API Key">
+        <NInput
+          v-model:value="setting.apiKey"
+          placeholder="请输入名称"
+        ></NInput>
+      </n-form-item>
+      <n-form-item label="自定义模型名称">
+        <NInput
+          v-model:value="setting.models"
           type="textarea"
-          placeholder="增加自定义模型，多个模型使用逗号(,)隔开
-"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="购买">
-        <el-link type="primary" href="https://api.chatfire.cn/"
-          >点击立即购买</el-link
-        >
-      </el-form-item>
-      <el-form-item label="联系我们">
-        <el-image style="width: 100px; height: 100px" :src="WxCode" fit="fit" />
-      </el-form-item>
-    </el-form>
+          placeholder="增加自定义模型，多个模型使用逗号(,)隔开"
+        ></NInput>
+      </n-form-item>
+      <n-form-item label="购买">
+        <n-button text type="primary" @click="open"> 点击立即购买 </n-button>
+      </n-form-item>
+      <n-form-item label="联系我们">
+        <NImage style="width: 100px; height: 100px" :src="WxCode" fit="fit" />
+      </n-form-item>
+    </NForm>
   </NModal>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { NModal, NTabPane, NTabs } from 'naive-ui'
-
+import { NModal, NButton, NForm, NFormItem, NInput, NImage } from 'naive-ui'
 import { useAppStore } from '@/stores'
-import { isPhone } from '@/utils'
 import WxCode from '@/assets/WX.png'
 
 const appStore = useAppStore()
@@ -53,6 +51,10 @@ const setting = reactive({
   apiKey: '',
   models: ''
 })
+
+const open = () => {
+  window.open('https://api.chatfire.cn/')
+}
 
 const show = () => {
   setting.apiKey = appStore.apiKey

@@ -1,102 +1,122 @@
 <template>
-  <el-dialog v-model="visible" title="文件上传" width="60%">
-    <div class="top">
-      <el-select
-        v-model="folderId"
-        placeholder="请选择上传的文件夹"
-        size="large"
-        style="width: 240px"
-      >
-        <el-option
-          v-for="item in chatStore.folders"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"
-        />
-      </el-select>
-    </div>
-    <div class="container">
-      <el-upload
-        drag
-        multiple
-        action=""
-        :before-upload="beforeUpload"
-        :http-request="ossUploadFile"
-      >
-        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-        <div class="el-upload__text">拖拽到这里或者 <em>点击上传</em></div>
-        <template #tip>
-          <div class="el-upload__tip">
+  <n-modal
+    style="width: 95%; max-width: 640px"
+    v-model:show="visible"
+    preset="dialog"
+    title="上传"
+    :show-icon="false"
+  >
+    <n-upload
+      multiple
+      directory-dnd
+      action=""
+      :max="5"
+      :on-before-upload="beforeUpload"
+      :custom-request="ossUploadFile"
+    >
+      <n-upload-dragger>
+        <div class="uploadBox">
+          <div style="margin-bottom: 12px">
+            <n-icon size="42" :depth="3">
+              <ArchiveOutline />
+            </n-icon>
+          </div>
+          <n-text style="font-size: 16px">
+            点击或者拖动文件到该区域来上传
+          </n-text>
+          <n-p depth="3" style="margin: 8px 0 0 0">
             图片格式 png/jpg/jpeg 文件格式 pdf/.docx（PPT 等格式建议转换成
             pdf使用）
-          </div>
-        </template>
-      </el-upload>
-    </div>
-  </el-dialog>
+          </n-p>
+        </div>
+      </n-upload-dragger>
+    </n-upload>
+  </n-modal>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
+import {
+  NTabs,
+  NScrollbar,
+  NTabPane,
+  NIcon,
+  NUpload,
+  NModal,
+  NUploadDragger,
+} from "naive-ui";
+import { uploadFile } from "@/api";
+import { useChatStore } from "@/stores";
+import { ArchiveOutline } from "@vicons/ionicons5";
 
-import { uploadFile } from '@/api'
-import { useChatStore } from '@/stores'
-
-const chatStore = useChatStore()
+const chatStore = useChatStore();
 // 校验
-const beforeUpload = (rawFile) => {
+const beforeUpload = ({file}) => {
+  const fileData = file.file
   // 类型限制 jpg jpeg docx doc pdf
   let types = [
-    'image/jpeg',
-    'image/png',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'application/wps-writer',
-    'application/pdf'
-  ]
+    "image/jpeg",
+    "image/png",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/wps-writer",
+    "application/msword",
+    "application/pdf",
+  ];
   // 校验文件相关信息
-  if (types.includes(rawFile.type)) {
+  if (types.includes(fileData.type)) {
     // 文件大小相关校验 20M
-    const maxSize = 20 * 1000 * 1024
-    if (rawFile.size >= maxSize) {
-      $message.warning('文件大小最多20M')
-      return false
+    const maxSize = 20 * 1000 * 1024;
+    if (fileData.size >= maxSize) {
+      $message.warning("文件大小最多20M");
+      return false;
     }
-    return true
+    return true;
   } else {
-    $message.warning('文件格式不支持')
-    return false
+    $message.warning("文件格式不支持");
+    return false;
   }
-}
+};
 
 // 文件上传并解析
-const folderId = ref('')
-const ossUploadFile = async (options) => {
-  let formData = new FormData()
-  formData.append('file', options.file)
-  formData.append('purpose', 'file-extract')
-  let data = await uploadFile(formData)
-  console.log(data)
-  visible.value = false
-  chatStore.initFolder()
-}
+const folderId = ref("");
+const ossUploadFile = async ({file}) => {
+  const fileData = file.file
+  let formData = new FormData();
+  formData.append("file", fileData);
+  formData.append("purpose", "file-extract");
+  let data = await uploadFile(formData);
+  console.log(data);
+  visible.value = false;
+  chatStore.initFolder();
+};
 
-const visible = ref(false)
+const visible = ref(false);
 const show = () => {
-  visible.value = true
+  visible.value = true;
   // folderId.value = chatStore.folders[0]?.id
-}
+};
 const close = () => {
-  visible.value = false
-}
+  visible.value = false;
+};
 defineExpose({
   show,
-  close
-})
+  close,
+});
 </script>
 <style lang="scss" scoped>
 .top {
   margin-bottom: 10px;
 }
-.container {
+.n-dialog.n-modal {
+  width: 600px !important;
+  height: 400px !important;
+}
+.uploadBox {
+  height: 220px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 80px 40px 40px 40px;
 }
 </style>

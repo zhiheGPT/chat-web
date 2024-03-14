@@ -13,6 +13,7 @@ export const useAppStore = defineStore({
         'gpt-4-all',
         'gpt-4',
         'kimi-all',
+        'glm-4-all',
       ], // 内置模型
       customModels: [], // 自定义模型
     }

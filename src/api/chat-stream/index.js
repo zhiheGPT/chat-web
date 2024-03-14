@@ -10,20 +10,11 @@ function getHeaders() {
 }
 
 // gpt 问答
-export const chat2gpt = async (data) => {
+export const chat2gpt = async (data, { signal }) => {
   return fetch(`${hosts.chat}/v1/chat/completions`, {
     method: 'post',
+    signal,
     body: JSON.stringify(data),
     headers: getHeaders()
   })
-
-}
-
-// 文件问答
-export const chat2File = async (data) => {
-  // return fetch(`${hosts.chat}/v1/chat/completions`, {
-  //   method: 'post',
-  //   body: JSON.stringify(data),
-  //   headers: getHeaders()
-  // })
 }

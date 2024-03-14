@@ -1,49 +1,22 @@
 <template>
   <div class="folder-box">
-    <!-- 有目录 -->
-    <template v-if="item.child">
-      <div class="folder-item">
-        <div class="left h-full">
-          <el-icon @click="collapseHandler"
-            ><CaretTop v-if="!folder.collapse" /><CaretBottom v-else
-          /></el-icon>
-          <span class="title">{{ folder.name }}</span>
-        </div>
-        <!-- <div class="right">
-          <el-icon size="18"><MoreFilled /></el-icon>
-        </div> -->
-      </div>
-
-      <div class="file-box" v-if="item.collapse">
-        <div v-for="file in item.child">
-          <div
-            class="file-item"
-            :class="{ 'is-active': chatStore.activeFile?.id === file.id }"
-          >
-            <div class="left h-full" @click="chatStore.setFile(file)">
-              <el-icon><Document /></el-icon>
-              <span class="title">{{ file.name }}</span>
-            </div>
-            <!-- <div class="right">
-              <el-icon size="18"><MoreFilled /></el-icon>
-            </div> -->
-          </div>
-        </div>
-      </div>
-    </template>
-    <div v-else class="file-box">
+    <div class="file-box">
       <div
         class="file-item pl10"
         :class="{ 'is-active': chatStore.file?.id === item.id }"
       >
         <div class="left h-full" @click="selectFile(item)">
-          <el-icon><Document /></el-icon>
+          <SvgIcon :width="20" :height="20" icon="gala:file-document"></SvgIcon>
           <span class="title">{{ item.filename }}</span>
         </div>
         <div class="right">
-          <el-icon title="删除" size="18" @click="emit('on-remove-file', item)">
-            <Delete />
-          </el-icon>
+          <SvgIcon
+            :width="18"
+            :height="18"
+            hover
+            icon="mingcute:delete-2-line"
+            @click="emit('on-remove-file', item)"
+          ></SvgIcon>
         </div>
       </div>
     </div>
@@ -51,29 +24,33 @@
 </template>
 
 <script setup>
-import { useChatStore } from '@/stores'
-import { getFileContent } from '@/api'
+import { useChatStore } from "@/stores";
+import { getFileContent } from "@/api";
+import { SvgIcon } from "@/components/common";
 
-const emit = defineEmits(['on-remove-folder', 'on-remove-file'])
+const emit = defineEmits(["on-remove-folder", "on-remove-file"]);
 const props = defineProps({
   item: {
     type: Object,
-    default: () => {}
-  }
-})
-const chatStore = useChatStore()
+    default: () => {},
+  },
+});
+const chatStore = useChatStore();
 
 const collapseHandler = () => {
-  props.item.collapse = !props.item.collapse
-}
+  props.item.collapse = !props.item.collapse;
+};
 
 const selectFile = async (file) => {
-  const { content } = await getFileContent(file.id)
+  chatStore.setLoading(true);
+  const { content } = await getFileContent(file.id).finally(() =>
+    chatStore.setLoading(false)
+  );
   chatStore.setFile({
     ...file,
-    content
-  })
-}
+    content,
+  });
+};
 </script>
 <style lang="scss" scoped>
 .folder-box {
@@ -114,11 +91,6 @@ const selectFile = async (file) => {
     .right {
       display: flex;
     }
-  }
-  :deep(.el-icon) {
-    padding: 2px;
-    border-radius: 2px;
-    cursor: pointer;
   }
 }
 .folder-item {

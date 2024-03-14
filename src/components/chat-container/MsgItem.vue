@@ -4,7 +4,9 @@
       <img src="@/assets/zhihe_logo_blue.png" />
       <div class="left_content">
         <v-md-preview class="md_content" :text="content"></v-md-preview>
-        <div v-if="status == 'loading'" v-loading="true" class="loading"></div>
+        <div v-if="status == 'loading'" class="loading">
+          <NSpin :size="15"></NSpin>
+        </div>
       </div>
     </div>
     <div
@@ -20,6 +22,7 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores'
+import { NSpin } from 'naive-ui'
 
 const emit = defineEmits(['stop-stream', 'on-refresh'])
 
@@ -49,18 +52,6 @@ const status = computed(() => props.item.status)
     height: 20px;
     top: 5px !important;
     right: 5px !important;
-    :deep(.el-loading-mask) {
-      background-color: unset;
-      .el-loading-spinner {
-        width: 20px;
-        height: 20px;
-        top: 20px;
-        .circular {
-          width: inherit;
-          height: inherit;
-        }
-      }
-    }
   }
 }
 .msg-item {

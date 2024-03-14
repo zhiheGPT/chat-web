@@ -1,60 +1,60 @@
 <template>
-  <el-dialog
-    v-model="visible"
+  <NModal
+    v-model:show="visible"
+    :auto-focus="false"
+    preset="dialog"
     title="问答设定"
-    :width="isPhone ? '90%' : '60%'"
-    @close="close"
+    :show-icon="false"
+    positive-text="确认"
+    negative-text="取消"
+    @positive-click="submit"
+    @on-negative-click="close"
+    :positive-button-props="{ color: '#111111' }"
+    :negative-button-props="{ ghost: true, color: '#999999' }"
+    style="width: 95%; max-width: 640px"
   >
-    <el-collapse v-model="activeNames" @change="handleChange">
-      <el-collapse-item name="1">
-        <template #title>
-          <el-icon class="mr5"><User /></el-icon>角色设定
-        </template>
-        <el-form label-width="100px">
-          <el-form-item label="角色名称">
-            <el-input v-model="setting.name"></el-input>
-          </el-form-item>
-          <el-form-item label="引导词">
-            <el-input v-model="setting.prompt"></el-input>
-          </el-form-item>
-        </el-form>
-      </el-collapse-item>
-      <el-collapse-item name="2">
-        <template #title>
-          <el-icon class="mr5"><ChatLineRound /></el-icon>聊天设置
-        </template>
-      </el-collapse-item>
-      <el-collapse-item name="3">
-        <template #title>
-          <el-icon class="mr5"><Cpu /></el-icon>模型设置
-        </template>
-      </el-collapse-item>
-    </el-collapse>
-
-    <template #footer>
-      <div class="dialog-footer">
-        <el-button type="info" @click="visible = false">取消</el-button>
-        <el-button type="primary" color="#111111" @click="submit"
-          >确定</el-button
-        >
-      </div>
-    </template>
-  </el-dialog>
+    <NCollapse :default-expanded-names="['1']" @change="handleChange">
+      <NCollapseItem name="1" title="角色设定">
+        <NForm label-width="100px" label-placement="left">
+          <n-form-item label="角色名称">
+            <NInput
+              v-model:value="setting.name"
+              placeholder="请输入名称"
+            ></NInput>
+          </n-form-item>
+          <n-form-item label="引导词">
+            <NInput
+              v-model:value="setting.prompt"
+              placeholder="请输入引导词"
+            ></NInput>
+          </n-form-item>
+        </NForm>
+      </NCollapseItem>
+      <NCollapseItem name="2" title="问答设置"> </NCollapseItem>
+      <NCollapseItem name="3" title="模型设置"> </NCollapseItem>
+    </NCollapse>
+  </NModal>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useChatStore } from '@/stores'
-import { isPhone } from '@/utils'
+import { ref } from "vue"
+import {
+  NModal,
+  NInput,
+  NCollapse,
+  NCollapseItem,
+  NForm,
+  NFormItem,
+} from "naive-ui"
+import { useChatStore } from "@/stores"
 
 const chatStore = useChatStore()
-const emit = defineEmits(['submit'])
+const emit = defineEmits(["submit"])
 
 const visible = ref(false)
-const activeNames = ref('1')
 const setting = ref({
-  name: '',
-  prompt: ''
+  name: "",
+  prompt: "",
 })
 
 const show = () => {
@@ -72,7 +72,7 @@ const submit = () => {
 
 defineExpose({
   show,
-  close
+  close,
 })
 </script>
 <style scoped></style>

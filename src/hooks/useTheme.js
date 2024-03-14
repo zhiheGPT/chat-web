@@ -20,10 +20,19 @@ export function useTheme() {
   const themeOverrides = computed(() => {
     if (isDark.value) {
       return {
-        common: {},
+        common: {
+
+          primaryColor: '#eeeeee',
+          primaryColorHover: "#ffffff",
+        },
       }
     }
-    return {}
+    return {
+      common: {
+        primaryColor: '#111111',
+        primaryColorHover: "#333333",
+      },
+    }
   })
 
   watch(

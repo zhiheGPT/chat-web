@@ -2,20 +2,25 @@
   <div class="header">
     <div class="left">
       <div class="wap-menu">
-        <img
-          src="@/assets/menu.png"
-          alt=""
+        <SvgIcon
+          :width="32"
+          :height="32"
+          hover
+          icon="gg:menu"
           @click="appStore.setSiderCollapsed(!appStore.collapsed)"
-        />
+        ></SvgIcon>
       </div>
       <div class="img">
-        <img :src="item.avatar" alt="" />
+        <n-image v-if="item.avatar" width="32" :src="item.avatar"></n-image>
+        <n-image v-else width="32" height="32" :src="DefaultImage" />
       </div>
       <div class="info">
         <div class="title">
           <span>{{ item.title }}</span>
           <div class="tags">
-            <NTag class="mr5" size="small">{{ chatStore.sendOptions.model }}</NTag>
+            <NTag class="mr5" size="small">{{
+              chatStore.sendOptions.model
+            }}</NTag>
             <NTag size="small">{{ chatStore.sendOptions.temperature }}</NTag>
           </div>
         </div>
@@ -24,10 +29,13 @@
     </div>
     <div class="right">
       <div class="actions">
-        <ZhIcon
-          :item="{ icon: 'Setting', label: '角色设定' }"
-          @on-click="openPromptSet"
-        ></ZhIcon>
+        <SvgIcon
+          :width="18"
+          :height="18"
+          hover
+          icon="lucide:edit"
+          @click="openPromptSet"
+        ></SvgIcon>
       </div>
     </div>
     <ChatSettingPopup ref="promptPopupRef"></ChatSettingPopup>
@@ -35,26 +43,27 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import ZhIcon from '../zh-icon/index.vue'
-import ChatSettingPopup from './ChatSettingPopup.vue'
-import { useChatStore, useAppStore } from '@/stores'
-import { NTag } from 'naive-ui'
+import { ref, computed } from "vue";
+import ChatSettingPopup from "./ChatSettingPopup.vue";
+import { useChatStore, useAppStore } from "@/stores";
+import { NTag, NImage } from "naive-ui";
+import DefaultImage from "@/assets/default-image.png";
+import { SvgIcon } from "@/components/common";
 
-const appStore = useAppStore()
-const chatStore = useChatStore()
-const emit = defineEmits(['set-prompt'])
+const appStore = useAppStore();
+const chatStore = useChatStore();
+const emit = defineEmits(["set-prompt"]);
 
 const item = computed(() => {
-  return chatStore.chat
-})
+  return chatStore.chat;
+});
 
 // 引导词设定
-const promptPopupRef = ref()
+const promptPopupRef = ref();
 
 const openPromptSet = () => {
-  promptPopupRef.value.show(item.value.prompt)
-}
+  promptPopupRef.value.show(item.value.prompt);
+};
 </script>
 <style lang="scss" scoped>
 .header {
@@ -67,14 +76,6 @@ const openPromptSet = () => {
       img {
         height: 32px;
         width: 32px;
-      }
-    }
-    .img {
-      height: 32px;
-      width: 32px;
-      img {
-        height: inherit;
-        width: inherit;
       }
     }
     .info {

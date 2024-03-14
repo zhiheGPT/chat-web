@@ -4,37 +4,44 @@
       <span class="title">ChatFire</span>
       <div class="actions">
         <template v-if="chatStore.tabIndex == 1">
-          <el-icon class="cursor-p" :size="20" @click="chatStore.createChat"
-            ><ChatLineSquare
-          /></el-icon>
+          <SvgIcon
+            :width="20"
+            :height="20"
+            hover
+            icon="material-symbols:chat-outline"
+            @click="chatStore.createChat"
+          ></SvgIcon>
         </template>
         <template v-else>
           <!-- 上传 -->
-          <el-icon class="cursor-p" :size="20" @click="openUpload"
-            ><UploadFilled
-          /></el-icon>
+          <SvgIcon
+            :width="20"
+            :height="20"
+            hover
+            icon="ci:cloud-upload"
+            @click="openUpload"
+          ></SvgIcon>
         </template>
       </div>
     </div>
-    <div class="tabs">
+    <div class="tabs h-full">
       <n-tabs
         v-model:value="chatStore.tabIndex"
         type="segment"
         default-value="1"
         animated
       >
-        <n-tab-pane name="1" tab="问答助手"></n-tab-pane>
-        <n-tab-pane name="2" tab="文件管理"></n-tab-pane>
+        <n-tab-pane name="1" tab="问答助手">
+          <NScrollbar>
+            <MessageList :list="chatStore.chatList"></MessageList>
+          </NScrollbar>
+        </n-tab-pane>
+        <n-tab-pane name="2" tab="文件管理">
+          <NScrollbar>
+            <FolderList></FolderList>
+          </NScrollbar>
+        </n-tab-pane>
       </n-tabs>
-    </div>
-    <div class="h-full overflow-hidden">
-      <NScrollbar>
-        <MessageList
-          v-show="chatStore.tabIndex == 1"
-          :list="chatStore.chatList"
-        ></MessageList>
-        <FolderList v-show="chatStore.tabIndex == 2"></FolderList>
-      </NScrollbar>
     </div>
     <FooterActions></FooterActions>
     <UploadDialog ref="uploadDialogRef"></UploadDialog>
@@ -50,14 +57,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import FolderList from '@/components/folder-list/index.vue'
-import MessageList from '@/components/message-list/index.vue'
-import UploadDialog from '@/components/upload-dialog/index.vue'
-import FooterActions from './FooterActions.vue'
-import { useChatStore, useAppStore } from '@/stores'
-import { NTabs, NScrollbar, NTabPane } from 'naive-ui'
-import { useBasicLayout } from '@/hooks/useBasicLayout'
+import { ref, onMounted } from "vue"
+import FolderList from "@/components/folder-list/index.vue"
+import MessageList from "@/components/message-list/index.vue"
+import UploadDialog from "@/components/upload-dialog/index.vue"
+import FooterActions from "./FooterActions.vue"
+import { useChatStore, useAppStore } from "@/stores"
+import { NTabs, NScrollbar, NTabPane } from "naive-ui"
+import { useBasicLayout } from "@/hooks/useBasicLayout"
+import { SvgIcon } from "@/components/common"
 
 const { isMobile } = useBasicLayout()
 const chatStore = useChatStore()
@@ -92,20 +100,15 @@ aside {
     }
     .actions {
       @include flex-layout();
-      color: #999999;
       gap: 10px;
-      .el-icon {
+      .n-icon {
+        color: #999999;
         &:hover {
           color: #000000;
         }
       }
       .folder_new {
         display: flex;
-      }
-    }
-    .el-icon {
-      &:hover {
-        color: #000000;
       }
     }
   }
@@ -119,6 +122,16 @@ aside {
     top: 0;
     right: 0;
     width: calc(100vw - 240px);
+  }
+  .tabs {
+    height: 100%;
+    overflow: hidden;
+    .n-tabs {
+      height: 100%;
+    }
+    .n-tab-pane {
+      height: 100%;
+    }
   }
 }
 </style>
