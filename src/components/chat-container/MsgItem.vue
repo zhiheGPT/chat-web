@@ -7,6 +7,29 @@
         <div v-if="status == 'loading'" class="loading">
           <NSpin :size="15"></NSpin>
         </div>
+        <div class="actions mt5">
+          <SvgIcon
+            :width="15"
+            :height="15"
+            hover
+            icon="icon-park-outline:copy"
+            @click="handlerAction('copy')"
+          ></SvgIcon>
+          <SvgIcon
+            :width="15"
+            :height="15"
+            hover
+            icon="bx:like"
+            @click="handlerAction"
+          ></SvgIcon>
+          <SvgIcon
+            :width="15"
+            :height="15"
+            hover
+            icon="bx:dislike"
+            @click="handlerAction"
+          ></SvgIcon>
+        </div>
       </div>
     </div>
     <div
@@ -20,19 +43,21 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue'
-import { useUserStore } from '@/stores'
-import { NSpin } from 'naive-ui'
+import { computed } from "vue"
+import { useUserStore } from "@/stores"
+import { NSpin } from "naive-ui"
+import { SvgIcon } from "@/components/common"
+import { copy } from "@/utils"
 
-const emit = defineEmits(['stop-stream', 'on-refresh'])
+const emit = defineEmits(["stop-stream", "on-refresh"])
 
 const props = defineProps({
   item: {
     type: Object,
-    default: () => {}
+    default: () => {},
   },
   role: String,
-  position: String
+  position: String,
 })
 
 const userStore = useUserStore()
@@ -41,6 +66,15 @@ const content = computed(() => {
 })
 
 const status = computed(() => props.item.status)
+
+const handlerAction = (type) => {
+  if (type == "copy") {
+    copy(content.value)
+    $message.success("复制成功")
+  } else {
+    $message.success("感谢你的反馈")
+  }
+}
 </script>
 <style lang="scss" scoped>
 .left_content {
@@ -76,7 +110,6 @@ const status = computed(() => props.item.status)
       padding: 16px 20px;
       border-radius: 4px;
       color: #333333;
-      // max-width: 80%;
       word-break: break-all;
     }
     &.msg-item__left {
@@ -85,14 +118,9 @@ const status = computed(() => props.item.status)
         background-color: #e5ebff;
       }
     }
-    .msg-actions {
-      padding-top: 10px;
-      display: flex;
-      gap: 14px;
-      img {
-        width: 16px;
-        height: 16px;
-        cursor: pointer;
+    .actions {
+      svg {
+        margin-right: 10px;
       }
     }
     &.msg-item__right {
@@ -116,7 +144,7 @@ const status = computed(() => props.item.status)
 .md_content {
   background: #e5ebff;
   border-radius: 4px;
-  min-height: 60px;
+  min-height: 40px;
 }
 :deep(.github-markdown-body) {
   padding: 16px 20px 0;

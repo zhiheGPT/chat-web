@@ -1,7 +1,7 @@
 <template>
   <aside>
     <div class="top">
-      <span class="title">ChatFire</span>
+      <n-text class="title">AI 火哥</n-text>
       <div class="actions">
         <template v-if="chatStore.tabIndex == 1">
           <SvgIcon
@@ -63,7 +63,7 @@ import MessageList from "@/components/message-list/index.vue"
 import UploadDialog from "@/components/upload-dialog/index.vue"
 import FooterActions from "./FooterActions.vue"
 import { useChatStore, useAppStore } from "@/stores"
-import { NTabs, NScrollbar, NTabPane } from "naive-ui"
+import { NTabs, NScrollbar, NTabPane, NText } from "naive-ui"
 import { useBasicLayout } from "@/hooks/useBasicLayout"
 import { SvgIcon } from "@/components/common"
 
@@ -94,7 +94,6 @@ aside {
     margin-bottom: 10px;
     color: #999999;
     .title {
-      color: #000000;
       font-size: 18px;
       font-weight: bold;
     }

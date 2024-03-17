@@ -38,39 +38,10 @@ const selectPrompt = () => {
     color: #1a1a1a66;
     margin-bottom: 10px;
   }
-  .list {
-    font-size: 14px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    .item {
-      cursor: pointer;
-      margin-bottom: 10px;
-      border-radius: 4px;
-      padding: 10px 16px;
-      width: calc(50% - 40px);
-      text-overflow: ellipsis;
-      color: #000000;
-      background-color: #ffffff;
-      &:hover {
-        color: #0b66e5;
-        background-color: #dbe5fb;
-      }
-    }
-  }
 }
-
-:deep(.el-collapse) {
-  margin-bottom: 10px;
-  .el-collapse-item__header {
-    padding-left: 15px;
-    color: #000000;
-    border-radius: 5px;
-  }
-  .el-collapse-item__wrap {
-    padding-left: 15px;
-    color: #000000;
-    border-radius: 5px;
+.dark {
+  .recommend {
+    background-color: #1a1a1a;
   }
 }
 </style>

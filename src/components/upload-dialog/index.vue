@@ -35,23 +35,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import {
-  NTabs,
-  NScrollbar,
-  NTabPane,
-  NIcon,
-  NUpload,
-  NModal,
-  NUploadDragger,
-} from "naive-ui";
-import { uploadFile } from "@/api";
-import { useChatStore } from "@/stores";
-import { ArchiveOutline } from "@vicons/ionicons5";
+import { ref } from "vue"
+import { NP, NIcon, NUpload, NModal, NUploadDragger, NText } from "naive-ui"
+import { uploadFile } from "@/api"
+import { useChatStore } from "@/stores"
+import { ArchiveOutline } from "@vicons/ionicons5"
 
-const chatStore = useChatStore();
+const chatStore = useChatStore()
 // 校验
-const beforeUpload = ({file}) => {
+const beforeUpload = ({ file }) => {
   const fileData = file.file
   // 类型限制 jpg jpeg docx doc pdf
   let types = [
@@ -61,47 +53,47 @@ const beforeUpload = ({file}) => {
     "application/wps-writer",
     "application/msword",
     "application/pdf",
-  ];
+  ]
   // 校验文件相关信息
   if (types.includes(fileData.type)) {
     // 文件大小相关校验 20M
-    const maxSize = 20 * 1000 * 1024;
+    const maxSize = 20 * 1000 * 1024
     if (fileData.size >= maxSize) {
-      $message.warning("文件大小最多20M");
-      return false;
+      $message.warning("文件大小最多20M")
+      return false
     }
-    return true;
+    return true
   } else {
-    $message.warning("文件格式不支持");
-    return false;
+    $message.warning("文件格式不支持")
+    return false
   }
-};
+}
 
 // 文件上传并解析
-const folderId = ref("");
-const ossUploadFile = async ({file}) => {
+const folderId = ref("")
+const ossUploadFile = async ({ file }) => {
   const fileData = file.file
-  let formData = new FormData();
-  formData.append("file", fileData);
-  formData.append("purpose", "file-extract");
-  let data = await uploadFile(formData);
-  console.log(data);
-  visible.value = false;
-  chatStore.initFolder();
-};
+  let formData = new FormData()
+  formData.append("file", fileData)
+  formData.append("purpose", "file-extract")
+  let data = await uploadFile(formData)
+  console.log(data)
+  visible.value = false
+  chatStore.initFolder()
+}
 
-const visible = ref(false);
+const visible = ref(false)
 const show = () => {
-  visible.value = true;
+  visible.value = true
   // folderId.value = chatStore.folders[0]?.id
-};
+}
 const close = () => {
-  visible.value = false;
-};
+  visible.value = false
+}
 defineExpose({
   show,
   close,
-});
+})
 </script>
 <style lang="scss" scoped>
 .top {

@@ -39,7 +39,6 @@
       <Send
         class="w-full"
         ref="sendRef"
-        :messages="messageList"
         @change="msgChange"
         @on-before="beforeSend"
         @on-end="endSend"

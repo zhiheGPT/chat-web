@@ -3,7 +3,7 @@ export const useAppStore = defineStore({
   id: 'app',
   state: () => {
     return {
-      theme: 'light',
+      theme: 'auto',
       collapsed: false,
       apiKey: '',
       models: [

@@ -62,9 +62,10 @@ export const useChatStore = defineStore({
       }
       localStorage.setItem("chatbot-chat-list", JSON.stringify(this.chatList));
     },
-    delChat() {
+    delChat(id) {
       this.chatList = this.chatList.filter((item) => item.id !== id);
       localStorage.setItem("chatbot-chat-list", JSON.stringify(this.chatList));
+      $message.success("操作成功")
     },
     initMessage(id) {
       this.chatId = id;

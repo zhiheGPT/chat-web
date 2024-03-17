@@ -7,6 +7,7 @@
         :item="item"
         :active="item.id == chatStore.chat.id"
         :key="item.id"
+        @on-remove="chatStore.delChat"
       ></MessageItem>
     </template>
     <NEmpty v-else description="暂无数据" />
@@ -23,6 +24,8 @@ defineProps({
 })
 
 const chatStore = useChatStore()
+
+
 </script>
 <style lang="scss" scoped>
 .message-list {
